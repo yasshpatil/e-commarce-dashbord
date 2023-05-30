@@ -1,14 +1,16 @@
 // index.js
 
 const express = require("express");
+const mongoose= require('mongoose');
 const app = express();
-const db = require("./db");
-const apiRouter = require("./api");
+const connectDB =async ()=>{
+      mongoose.connect("mongodb://localhost:27017/e-comm");
+      const productSchema= new mongoose.Schema({});
+      const product= mongoose.model("product",productSchema);
+      const data = await product.find();
+      console.warn(data);
+}
 
-app.use(express.json());
+connectDB();
 
-app.use("/api", apiRouter);
-
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
-});
+app.listen(5000);
